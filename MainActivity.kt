@@ -9,6 +9,7 @@ import com.example.roomdatabasetest.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +27,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnWriteData.setOnClickListener {
             writeData()
+        }
+
+        binding.btnReadData.setOnClickListener{
+            readData()
         }
     }
 
@@ -48,6 +53,30 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Data Written", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "Could Not Write Data", Toast.LENGTH_SHORT).show()
+        }
+    }
+    private suspend fun displayData(user: User) {
+        withContext(Dispatchers.Main){
+
+            binding.tvFirstName.text = user.firstName
+            binding.tvLastName.text = user.lastName
+
+        }
+    }
+
+    private fun readData() {
+
+
+        val firstName = binding.etFirstName.text.toString()
+        val lastName = binding.etLastName.text.toString()
+
+        if(firstName.isNotEmpty() && lastName.isNotEmpty()){
+            lateinit var user: User
+
+            GlobalScope.launch {
+                user = userDB.userDao().findByName(firstName,lastName)
+                displayData(user)
+            }
         }
     }
 }
