@@ -5,5 +5,6 @@ A repository which contains an app to test an android RoomDatabase which will la
 
 V1: Write data functionality added; users are now able to write data to the room database and store their data locally.
 
-V2: Read and Display Data functionality added; users are now able to read data and it will be displayed on the UI
+V2: Read and Display Data functionality added; users are now able to read data and it will be displayed on the UI.
 
+V3: Delete all data functionality added; users can now delete all of their data.
