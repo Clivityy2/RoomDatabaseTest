@@ -29,10 +29,14 @@ class MainActivity : AppCompatActivity() {
             writeData()
         }
 
-        binding.btnReadData.setOnClickListener{
+        binding.btnReadData.setOnClickListener {
             readData()
         }
-    }
+
+        binding.btnDeleteData.setOnClickListener {
+                deleteData()
+            }
+        }
 
     private fun writeData() {
         val firstName = binding.etFirstName.text.toString()
@@ -55,8 +59,9 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Could Not Write Data", Toast.LENGTH_SHORT).show()
         }
     }
+
     private suspend fun displayData(user: User) {
-        withContext(Dispatchers.Main){
+        withContext(Dispatchers.Main) {
 
             binding.tvFirstName.text = user.firstName
             binding.tvLastName.text = user.lastName
@@ -70,14 +75,20 @@ class MainActivity : AppCompatActivity() {
         val firstName = binding.etFirstName.text.toString()
         val lastName = binding.etLastName.text.toString()
 
-        if(firstName.isNotEmpty() && lastName.isNotEmpty()){
+        if (firstName.isNotEmpty() && lastName.isNotEmpty()) {
             lateinit var user: User
 
             GlobalScope.launch {
-                user = userDB.userDao().findByName(firstName,lastName)
+                user = userDB.userDao().findByName(firstName, lastName)
                 displayData(user)
             }
         }
     }
-}
 
+    private fun deleteData() {
+
+        GlobalScope.launch {
+            userDB.userDao().deleteAllUsers()
+        }
+    }
+}
