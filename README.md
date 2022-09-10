@@ -3,6 +3,9 @@ A repository which contains an app to test an android RoomDatabase which will la
 
 # Version List:
 
+Project has been completed on: 14/08/2022 (DD/MM/YYYY)
+Published to app store on: N/A
+
 V1: Write data functionality added; users are now able to write data to the room database and store their data locally.
 
 V2: Read and Display Data functionality added; users are now able to read data and it will be displayed on the UI.
